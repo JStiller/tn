@@ -7,10 +7,11 @@
 	<body ng-app='base'>
 		<section>
 			<ul ng-controller="notificationController as notification">
-				<li ng-repeat="item in notification.items | filter: notification.isKnown | orderBy: notification.config.orderBy | limitTo: notification.config.limitTo">
-					<strong>{{item.title}}</strong>
-					{{item.message}}
-					<button ng-click="notification.close($event, item.title)">x</button>
+				<li ng-repeat="item in notification.items |
+					filter: notification.isKnown |
+					orderBy: notification.config.orderBy |
+					limitTo: notification.config.limitTo"
+					ng-include="'source/template/notification.html'">
 				</li>
 			</ul>
 		</section>
