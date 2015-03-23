@@ -71,7 +71,7 @@
 				.getItem(obj.title);
 
 			if(clientNotification === null) {
-				vm.getStorage(obj.permanent)
+				localStorage
 					.setItem(obj.title, false);
 
 				clientNotification = localStorage
