@@ -23,22 +23,26 @@
 		vm.items = [{
 				'priority': '4',
 				'title': 'Titel A',
-				'message': 'Nachricht'
+				'message': 'Nachricht',
+				'permanent': true
 			},
 			{
 				'priority': '3',
 				'title': 'Titel B',
-				'message': 'Nachricht'
+				'message': 'Nachricht',
+				'permanent': true
 			},
 			{
 				'priority': '2',
 				'title': 'Titel C',
-				'message': 'Nachricht'
+				'message': 'Nachricht',
+				'permanent': false
 			},
 			{
 				'priority': '1',
 				'title': 'Titel D',
-				'message': 'Nachricht'
+				'message': 'Nachricht',
+				'permanent': false
 			}];
 
 		vm.close = close;
@@ -51,9 +55,14 @@
 		 * @var title {string} 	title of the notification
 		 * @return 				void
 		 **/
-		function close($event, title) {
-			localStorage
-				.setItem(title, true);
+		function close($event, title, permanent) {
+			if(permanent == "true") {
+				localStorage
+					.setItem(title, true);	
+			} else {
+				sessionStorage
+					.setItem(title, true);
+			}
 
 			angular.element($event.currentTarget)
 				.parent()
@@ -67,14 +76,22 @@
 		 * @return 				boolean
 		 **/
 		function isKnown(obj) {
-			var clientNotification = localStorage
+			var storage;
+
+			if(obj.permanent) {
+				storage = localStorage;
+			} else {
+				storage = sessionStorage;
+			}
+
+			var clientNotification = storage
 				.getItem(obj.title);
 
 			if(clientNotification === null) {
-				localStorage
+				storage
 					.setItem(obj.title, false);
 
-				clientNotification = localStorage
+				clientNotification = storage
 					.getItem(obj.title);
 			}
 
